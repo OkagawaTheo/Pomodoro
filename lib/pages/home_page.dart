@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro_app/functions/start_button.dart';
+import 'dart:async';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -8,7 +8,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final int _minutes = 25;
+  int _minutes = 10;
+
+  void start() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if(_minutes > 0){
+        setState(() {
+        _minutes--;
+      });}
+      
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +52,44 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [startButton, stopButton],
+                children: [
+                  ElevatedButton(
+                    //start button
+                    style: ButtonStyle(minimumSize:
+                        MaterialStateProperty.resolveWith<Size?>((states) {
+                      return const Size(150, 50);
+                    }), backgroundColor:
+                        MaterialStateProperty.resolveWith<Color?>((states) {
+                      if (states.contains(MaterialState.hovered)) {
+                        return const Color(0xffD0C3FF);
+                      }
+                      return Colors.blue;
+                    })),
+                    child: const Text('Start studying'),
+                    onPressed: () {
+                      if (_minutes > 0) {
+                        start();
+                      }
+                    },
+                  ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      minimumSize:
+                          MaterialStateProperty.resolveWith<Size?>((states) {
+                        return const Size(150, 50);
+                      }),
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith<Color?>((states) {
+                        if (states.contains(MaterialState.hovered)) {
+                          return const Color(0xffD0C3FF);
+                        }
+                        return Colors.blue; // normal color
+                      }),
+                    ),
+                    child: const Text('Stop'),
+                    onPressed: () => {},
+                  ),
+                ],
               )
             ],
           ),
