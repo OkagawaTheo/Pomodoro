@@ -8,8 +8,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _minutes = 25;
-  
+  final int _minutes = 25;
+
   @override
   Widget build(BuildContext context) {
     return Container(
