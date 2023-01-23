@@ -65,9 +65,17 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                 child: 
                   Container(
-                    decoration: const BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+                    decoration: 
+                      const BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blueGrey, 
+                          spreadRadius: 4,
+                          blurRadius: 30,
+                          offset: Offset(-7,0),
+                          blurStyle: BlurStyle.normal)],
 
-                    color: Color.fromARGB(255, 240, 243, 250))
+                      color: Color.fromARGB(255, 240, 243, 250))
                   ),
                 )
               
