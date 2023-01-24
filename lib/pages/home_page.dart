@@ -8,23 +8,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _minutes = 10;
+  int _minutes = 25;
+  int _seconds = 0;
+  Timer? _timer;
 
   void start() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_minutes > 0) {
-        setState(() {
-          _minutes--;
-        });
-      }
+    if (_timer != null) {
+      _timer?.cancel();
+    }
+
+    if (_minutes > 0) {
+      _seconds = _minutes * 60;
+    }
+    if (_seconds > 60) {
+      _minutes = (_seconds / 60).floor();
+      _seconds -= (_minutes * 60);
+    }
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_seconds > 0) {
+          _seconds--;
+        } else {
+          if (_minutes > 0) {
+            _seconds = 59;
+            _minutes--;
+          } else {
+            _timer?.cancel();
+            'Timer completed';
+          }
+        }
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
-
     return Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -37,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Container(
                 padding: const EdgeInsets.only(top: 120),
-                child: Text('$_minutes',
+                child: Text('$_minutes : $_seconds',
                     style: const TextStyle(color: Colors.white, fontSize: 45),
                     textAlign: TextAlign.center),
               ),
@@ -78,8 +97,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      Text('Study Time', style: TextStyle(fontSize: 15, color: Colors.grey[400])),
-                                      Text('Break', style: TextStyle(fontSize: 15, color: Colors.grey[400])),
+                                      Text('Study Time',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.grey[400])),
+                                      Text('Break',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.grey[400])),
                                     ],
                                   ),
                                   Expanded(
@@ -89,20 +114,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                           children: [
                                         ElevatedButton(
                                           //start button
-                                          style: ButtonStyle(minimumSize:
-                                              MaterialStateProperty.resolveWith<
-                                                  Size?>((states) {
-                                            return const Size(150, 50);
-                                          }), backgroundColor:
-                                              MaterialStateProperty.resolveWith<
-                                                  Color?>((states) {
-                                            if (states.contains(
-                                                MaterialState.hovered)) {
-                                              return const Color(0xffD0C3FF);
-                                            }
-                                            return Colors.blue;
-                                          })),
-                                          child: const Text('Start studying'),
+                                          child: const Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10, horizontal: 10),
+                                              child: Text(
+                                                'Start Studying',
+                                              )),
+
                                           onPressed: () {
                                             if (_minutes > 0) {
                                               start();
