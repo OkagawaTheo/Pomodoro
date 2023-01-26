@@ -10,13 +10,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _minutes = 25;
   int _seconds = 0;
-  Timer? _timer;
+  Timer? timer;
 
   void start() {
-    if (_timer != null) {
-      _timer?.cancel();
-    }
-
     if (_minutes > 0) {
       _seconds = _minutes * 60;
     }
@@ -24,8 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _minutes = (_seconds / 60).floor();
       _seconds -= (_minutes * 60);
     }
-
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (_seconds > 0) {
           _seconds--;
@@ -34,14 +29,16 @@ class _MyHomePageState extends State<MyHomePage> {
             _seconds = 59;
             _minutes--;
           } else {
-            _timer?.cancel();
+            timer.cancel();
             'Timer completed';
           }
         }
       });
     });
   }
+  
 
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
             gradient: LinearGradient(
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
-                colors: [Color(0xff09C6F9), Color(0xff045DE9)])),
+                colors: [Color(0xff2C5364), Color(0xff0F2027)])),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Column(
@@ -61,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     textAlign: TextAlign.center),
               ),
               const SizedBox(
-                height: 200,
+                height: 150,
               ),
               Expanded(
                 child: Column(
@@ -70,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Container(
                       width: double.infinity,
                       decoration: const BoxDecoration(
+                        color: Color(0xffe4e6eb),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(40),
                             topRight: Radius.circular(40)),
@@ -81,11 +79,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               offset: Offset(-7, 0),
                               blurStyle: BlurStyle.normal)
                         ],
-                        color: Color.fromARGB(255, 240, 243, 250),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            top: 50, left: 20, right: 20, bottom: 80),
+                            top: 50, left: 20, right: 20, bottom: 50),
                         child: Column(children: [
                           Expanded(
                               child: Row(
@@ -96,15 +93,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
-                                    children: [
+                                    children: const [
                                       Text('Study Time',
                                           style: TextStyle(
                                               fontSize: 15,
-                                              color: Colors.grey[400])),
+                                              color: Colors.grey)),
                                       Text('Break',
                                           style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.grey[400])),
+                                            fontSize: 15,
+                                            color: Colors.grey,
+                                          )),
                                     ],
                                   ),
                                   Expanded(
