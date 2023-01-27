@@ -14,7 +14,6 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _buttonEnable = true;
   get isActive => isActive;
 
-
   void start() {
     if (_minutes > 0) {
       _seconds = _minutes * 60;
@@ -133,6 +132,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                               if (_buttonEnable) {
                                                 _buttonEnable = false;
                                                 start();
+                                              } else {
+                                                // pausar o timer e alterar o texto para "pausar"
+                                                // if (buttonenable = false){ //está no "modo pause"
+                                                //
+                                                // timer.pause();
+                                                // }
                                               }
                                             });
                                           },
