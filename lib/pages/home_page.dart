@@ -11,6 +11,9 @@ class _MyHomePageState extends State<MyHomePage> {
   int _minutes = 25;
   int _seconds = 0;
   Timer? timer;
+  bool _buttonEnable = true;
+  get isActive => isActive;
+
 
   void start() {
     if (_minutes > 0) {
@@ -19,26 +22,30 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_seconds > 60) {
       _minutes = (_seconds / 60).floor();
       _seconds -= (_minutes * 60);
-    }
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_seconds > 0) {
-          _seconds--;
-        } else {
-          if (_minutes > 0) {
-            _seconds = 59;
-            _minutes--;
-          } else {
-            timer.cancel();
-            'Timer completed';
-          }
-        }
-      });
-    });
-  }
-  
 
-  
+      const oneSec = Duration(seconds: 1);
+      timer = Timer.periodic(
+          oneSec,
+          (timer) => {
+                setState(() {
+                  if (_seconds > 0) {
+                    _seconds--;
+                  } else {
+                    if (_minutes > 0) {
+                      _seconds = 59;
+                      _minutes--;
+                    } else {
+                      setState(() {
+                        timer.cancel();
+                        'Timer completed';
+                      });
+                    }
+                  }
+                })
+              });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -93,15 +100,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
-                                    children: const [
+                                    children: [
                                       Text('Study Time',
                                           style: TextStyle(
                                               fontSize: 15,
-                                              color: Colors.grey)),
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blueGrey[800])),
                                       Text('Break',
                                           style: TextStyle(
                                             fontSize: 15,
-                                            color: Colors.grey,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.blueGrey[800],
                                           )),
                                     ],
                                   ),
@@ -120,9 +129,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                               )),
 
                                           onPressed: () {
-                                            if (_minutes > 0) {
-                                              start();
-                                            }
+                                            setState(() {
+                                              if (_buttonEnable) {
+                                                _buttonEnable = false;
+                                                start();
+                                              }
+                                            });
                                           },
                                         )
                                       ]))
