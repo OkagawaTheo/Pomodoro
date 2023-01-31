@@ -13,15 +13,21 @@ class _MyHomePageState extends State<MyHomePage> {
   int _minutes = 25;
   int _seconds = 0;
   Timer? timer;
-  bool _buttonEnable = true;
 
-  void start() {
+  void start({bool reset = true}) {
+    if (reset) {
+      resetTimer();
+    }
+
     if (_minutes > 0) {
       _seconds = _minutes * 60;
+    } else {
+      stopTimer(reset: false);
     }
     if (_seconds > 60) {
       _minutes = (_seconds / 60).floor();
       _seconds -= (_minutes * 60);
+
       const oneSec = Duration(seconds: 1);
       timer = Timer.periodic(
           oneSec,
@@ -33,16 +39,69 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (_minutes > 0) {
                       _seconds = 59;
                       _minutes--;
-                    } else {
-                      setState(() {
-                        timer.cancel();
-                        'Timer completed';
-                      });
                     }
                   }
                 })
               });
     }
+  }
+
+  void resetTimer() => setState(() {
+        _minutes = 25;
+        _seconds = 0;
+      });
+
+  void stopTimer({bool reset = true}) {
+    if (reset) {
+      resetTimer();
+    }
+
+    setState(() {
+      timer?.cancel();
+    });
+  }
+
+  Widget buildButtons() {
+    final isRunnig = timer == null ? false : timer!.isActive;
+
+    return isRunnig
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  // pause button
+                  style:
+                      ElevatedButton.styleFrom(fixedSize: const Size(110, 1)),
+                  child: Text(isRunnig ? 'Pause' : 'Resume'),
+                  onPressed: () {
+                    setState(() {
+                      if (isRunnig) {
+                        stopTimer(reset: false);
+                      } else {
+                        start(reset: false);
+                      }
+                    });
+                  }),
+              const SizedBox(
+                width: 12,
+              ),
+              ElevatedButton(
+                  // cancel button
+                  style:
+                      ElevatedButton.styleFrom(fixedSize: const Size(110, 1)),
+                  onPressed: () {
+                    stopTimer(reset: true);
+                  },
+                  child: const Text('cancel'))
+            ],
+          )
+        : ElevatedButton(
+            // start button
+            style: ElevatedButton.styleFrom(fixedSize: const Size(110, 0)),
+            onPressed: () {
+              start();
+            },
+            child: const Text('start'));
   }
 
   @override
@@ -57,16 +116,13 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Colors.transparent,
           body: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.only(top: 120),
-                child: Text('$_minutes : $_seconds',
-                    style: const TextStyle(color: Colors.white, fontSize: 45),
-                    textAlign: TextAlign.center),
-              ),
+              Expanded(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text('$_minutes : $_seconds')],
+              )),
 
-
-              const SizedBox(height: 100,),
-              const SetsIcons(total: 4, done: 1), // sets widget
+              const SetsIcons(total: 4, done: 2), // sets widget
 
               Expanded(
                 child: Column(
@@ -119,24 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
-                                          children: [
-                                        ElevatedButton(
-                                          //start button
-                                          child: const Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 10, horizontal: 10),
-                                              child: Text(
-                                                'Start Studying',
-                                              )),
-
-                                          onPressed: () {
-                                            if (_buttonEnable) {
-                                              _buttonEnable = false;
-                                              start();
-                                            }
-                                          },
-                                        )
-                                      ]))
+                                          children: [buildButtons()]))
                                 ],
                               ))
                             ],
