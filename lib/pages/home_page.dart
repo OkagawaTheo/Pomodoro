@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:pomodoro_app/widgets/sets_widget.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
   @override
@@ -12,7 +14,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int _seconds = 0;
   Timer? timer;
   bool _buttonEnable = true;
-  get isActive => isActive;
 
   void start() {
     if (_minutes > 0) {
@@ -63,9 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: const TextStyle(color: Colors.white, fontSize: 45),
                     textAlign: TextAlign.center),
               ),
-              const SizedBox(
-                height: 150,
-              ),
+
+              const SetsIcons(), // sets widget
+
               Expanded(
                 child: Column(
                   children: [
@@ -73,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Container(
                       width: double.infinity,
                       decoration: const BoxDecoration(
-                        color: Color(0xffe4e6eb),
+                        color: Color(0xff66D7EE),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(40),
                             topRight: Radius.circular(40)),
@@ -128,18 +129,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                               )),
 
                                           onPressed: () {
-                                            setState(() {
-                                              if (_buttonEnable) {
-                                                _buttonEnable = false;
-                                                start();
-                                              } else {
-                                                // pausar o timer e alterar o texto para "pausar"
-                                                // if (buttonenable = false){ //está no "modo pause"
-                                                //
-                                                // timer.pause();
-                                                // }
-                                              }
-                                            });
+                                            if (_buttonEnable) {
+                                              _buttonEnable = false;
+                                              start();
+                                            }
                                           },
                                         )
                                       ]))
