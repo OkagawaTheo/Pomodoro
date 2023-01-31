@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:pomodoro_app/widgets/sets_widget.dart';
+import 'package:pomodoro_app/widgets/sets_icons.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -22,7 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_seconds > 60) {
       _minutes = (_seconds / 60).floor();
       _seconds -= (_minutes * 60);
-
       const oneSec = Duration(seconds: 1);
       timer = Timer.periodic(
           oneSec,
@@ -65,7 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     textAlign: TextAlign.center),
               ),
 
-              const SetsIcons(), // sets widget
+
+              const SizedBox(height: 100,),
+              const SetsIcons(total: 4, done: 1), // sets widget
 
               Expanded(
                 child: Column(
