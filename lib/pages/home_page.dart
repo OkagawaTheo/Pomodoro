@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:pomodoro_app/widgets/build_timer.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:pomodoro_app/widgets/sets_icons.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -9,14 +9,12 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-  int minutes = 25;
-  int seconds = 0;
-  Timer? timer;
-
+int minutes = 25;
+int seconds = 0;
+Timer? timer;
+final isRunnig = timer == null ? false : timer!.isActive;
 
 class _MyHomePageState extends State<MyHomePage> {
-  
-
   void start({bool reset = true}) {
     if (reset) {
       resetTimer();
@@ -99,6 +97,33 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text('start'));
   }
 
+ 
+
+  Widget buildTimer() {
+    return SizedBox(
+      height: 200,
+      width: 200,
+      child: Center(
+          child: CircularPercentIndicator(
+        center: Text(
+          '$minutes : $seconds',
+          style: const TextStyle(fontSize: 30),
+        ),
+        animation: true,
+        animationDuration: 1000,
+        addAutomaticKeepAlive: false,
+        reverse: true,
+        radius: 130,
+        lineWidth: 10,
+        percent: 1,
+        backgroundColor: const Color(0xff121212),
+        linearGradient: const LinearGradient(
+            colors: [Color(0xff0575E6), Color(0xff021B79)]),
+        circularStrokeCap: CircularStrokeCap.round,
+      )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -111,11 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Colors.transparent,
           body: Column(
             children: [
-              Expanded(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [buildTimer()],
-              )),
+              Expanded(child: buildTimer()),
 
               const SetsIcons(total: 4, done: 2), // sets widget
 
@@ -125,14 +146,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                         child: Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(
-                        color: Color(0xff66D7EE),
-                        borderRadius: BorderRadius.only(
+                      decoration: BoxDecoration(
+                        color: Colors.cyan.shade500,
+                        borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(40),
                             topRight: Radius.circular(40)),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                              color: Colors.blueGrey,
+                              color: Color.fromARGB(255, 38, 88, 112),
                               spreadRadius: 4,
                               blurRadius: 30,
                               offset: Offset(-7, 0),
