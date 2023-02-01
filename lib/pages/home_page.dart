@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'package:flutter/material.dart';
+import 'package:pomodoro_app/widgets/build_timer.dart';
 import 'package:pomodoro_app/widgets/sets_icons.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -9,36 +9,39 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _minutes = 25;
-  int _seconds = 0;
+  int minutes = 25;
+  int seconds = 0;
   Timer? timer;
+
+
+class _MyHomePageState extends State<MyHomePage> {
+  
 
   void start({bool reset = true}) {
     if (reset) {
       resetTimer();
     }
 
-    if (_minutes > 0) {
-      _seconds = _minutes * 60;
+    if (minutes > 1) {
+      seconds = minutes * 60;
     } else {
       stopTimer(reset: false);
     }
-    if (_seconds > 60) {
-      _minutes = (_seconds / 60).floor();
-      _seconds -= (_minutes * 60);
+    if (seconds > 60) {
+      minutes = (seconds / 60).floor();
+      seconds -= (minutes * 60);
 
       const oneSec = Duration(seconds: 1);
       timer = Timer.periodic(
           oneSec,
           (timer) => {
                 setState(() {
-                  if (_seconds > 0) {
-                    _seconds--;
+                  if (seconds > 0) {
+                    seconds--;
                   } else {
-                    if (_minutes > 0) {
-                      _seconds = 59;
-                      _minutes--;
+                    if (minutes > 0) {
+                      seconds = 59;
+                      minutes--;
                     }
                   }
                 })
@@ -47,8 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void resetTimer() => setState(() {
-        _minutes = 25;
-        _seconds = 0;
+        minutes = 25;
+        seconds = 0;
       });
 
   void stopTimer({bool reset = true}) {
@@ -73,15 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style:
                       ElevatedButton.styleFrom(fixedSize: const Size(110, 1)),
                   child: Text(isRunnig ? 'Pause' : 'Resume'),
-                  onPressed: () {
-                    setState(() {
-                      if (isRunnig) {
-                        stopTimer(reset: false);
-                      } else {
-                        start(reset: false);
-                      }
-                    });
-                  }),
+                  onPressed: () {}),
               const SizedBox(
                 width: 12,
               ),
@@ -119,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text('$_minutes : $_seconds')],
+                children: [buildTimer()],
               )),
 
               const SetsIcons(total: 4, done: 2), // sets widget
