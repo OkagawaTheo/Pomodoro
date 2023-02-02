@@ -22,14 +22,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (minutes > 1) {
       seconds = minutes * 60;
-    } else {
-      stopTimer(reset: false);
     }
     if (seconds > 60) {
       minutes = (seconds / 60).floor();
       seconds -= (minutes * 60);
 
-      const oneSec = Duration(seconds: 1);
+      const oneSec = Duration(milliseconds: 1);
       timer = Timer.periodic(
           oneSec,
           (timer) => {
@@ -40,6 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (minutes > 0) {
                       seconds = 59;
                       minutes--;
+                    } else {
+                      stopTimer(reset: true);
                     }
                   }
                 })
@@ -47,10 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void resetTimer() => setState(() {
-        minutes = 25;
-        seconds = 0;
-      });
+  void resetTimer() {
+    setState(() {
+      minutes = 25;
+      seconds = 0;
+    });
+  }
 
   void stopTimer({bool reset = true}) {
     if (reset) {
@@ -66,38 +68,24 @@ class _MyHomePageState extends State<MyHomePage> {
     final isRunnig = timer == null ? false : timer!.isActive;
 
     return isRunnig
-        ? Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                  // pause button
-                  style:
-                      ElevatedButton.styleFrom(fixedSize: const Size(110, 1)),
-                  child: Text(isRunnig ? 'Pause' : 'Resume'),
-                  onPressed: () {}),
-              const SizedBox(
-                width: 12,
-              ),
-              ElevatedButton(
-                  // cancel button
-                  style:
-                      ElevatedButton.styleFrom(fixedSize: const Size(110, 1)),
-                  onPressed: () {
-                    stopTimer(reset: true);
-                  },
-                  child: const Text('cancel'))
-            ],
-          )
+        ? ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              elevation: 8,
+              fixedSize: const Size(60, 60),
+            ),
+            onPressed: () {
+              stopTimer();
+            },
+            child: const Icon(Icons.stop_rounded))
         : ElevatedButton(
-            // start button
-            style: ElevatedButton.styleFrom(fixedSize: const Size(110, 0)),
+            style: ElevatedButton.styleFrom(
+                elevation: 8, fixedSize: const Size(60, 60)),
             onPressed: () {
               start();
             },
-            child: const Text('start'));
+            child: const Icon(Icons.play_arrow_rounded),
+          );
   }
-
- 
 
   Widget buildTimer() {
     return SizedBox(
@@ -106,16 +94,16 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Center(
           child: CircularPercentIndicator(
         center: Text(
-          '$minutes : $seconds',
+          seconds == 0
+              ? '$minutes : ${seconds.round()}0'
+              : '$minutes : $seconds',
           style: const TextStyle(fontSize: 30),
         ),
-        animation: true,
-        animationDuration: 1000,
-        addAutomaticKeepAlive: false,
         reverse: true,
         radius: 130,
         lineWidth: 10,
-        percent: 1,
+        percent: 0.3,
+        animation: true,
         backgroundColor: const Color(0xff121212),
         linearGradient: const LinearGradient(
             colors: [Color(0xff0575E6), Color(0xff021B79)]),
