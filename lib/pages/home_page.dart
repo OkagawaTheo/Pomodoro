@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       seconds = 59;
                       minutes--;
                     } else {
-                      stopTimer(reset: true);
+                      stopTimer();
                     }
                   }
                 })
@@ -54,11 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void stopTimer({bool reset = true}) {
-    if (reset) {
-      resetTimer();
-    }
-
+  void stopTimer() {
     setState(() {
       timer?.cancel();
     });
