@@ -9,12 +9,14 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-int minutes = 25;
-int seconds = 0;
 Timer? timer;
-bool breaktime = false;
+bool? breaktime;
+int counter = 0;
 
 class _MyHomePageState extends State<MyHomePage> {
+  int minutes = 25;
+  int seconds = 0;
+
   void start() {
     if (minutes > 1) {
       seconds = minutes * 60;
@@ -35,8 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       seconds = 59;
                       minutes--;
                     } else {
-                      _stopTimer();
-                      breaktime = true;
+                      counter++;
+                      timer.cancel();
+                      if (counter == 1) {
+                        _resetTimer();
+                      } else {
+                        minutes = 25;
+                        counter++;
+                      }
                     }
                   }
                 })
@@ -46,13 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _resetTimer() {
     setState(() {
-      if (breaktime = true) {
-        minutes = 5;
-        seconds = 0;
-      } else {
-        minutes = 123;
-      }
-      
+      counter = -2;
+      minutes = 5;
     });
   }
 
