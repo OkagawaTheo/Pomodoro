@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:pomodoro_app/widgets/sets_icons.dart';
@@ -27,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
       minutes = (seconds / 60).floor();
       seconds -= (minutes * 60);
 
-      const oneSec = Duration(seconds: 1);
+      const oneSec = Duration(milliseconds: 1000);
       timer = Timer.periodic(
           oneSec,
           (timer) => {
@@ -74,20 +73,38 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _resetTimer() {
-    minutes = 25;
-    seconds = 0;
+    setState(() {
+      minutes = 25;
+      seconds = 0;
+    });
   }
 
-  void _popup() {
-    showDialog(
+  Future mypopup(){
+    return showDialog(
         context: context,
         builder: (context) {
-          return const CupertinoAlertDialog(
-            title: Text('Deseja mesmo resetar?'),
+          return AlertDialog(
+            title: const Text('Reset'),
+            content: const Text('You want to reset the timer?'),
+            actionsAlignment: MainAxisAlignment.center,
+            elevation: 10,
+            actions: [
+              ElevatedButton(
+                  onPressed: () {
+                    _resetTimer();
+                    _stopTimer();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Yes')),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('No'))
+            ],
           );
         });
-  }
-
+  } 
   Widget buildButtons() {
     final isRunnig = timer == null ? false : timer!.isActive;
 
@@ -98,8 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               fixedSize: const Size(60, 60),
             ),
             onPressed: () {
-              _stopTimer();
-              _popup();
+              mypopup();
             },
             child: const Icon(Icons.stop_rounded))
         : ElevatedButton(
