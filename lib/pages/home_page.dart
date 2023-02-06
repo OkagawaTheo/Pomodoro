@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:pomodoro_app/widgets/sets_icons.dart';
@@ -10,13 +11,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 Timer? timer;
-bool? breaktime;
+int minutes = 25;
+int seconds = 0;
+int breaktime = 5;
+int longbreak = 15;
 int counter = 0;
+int sets = 0;
 
 class _MyHomePageState extends State<MyHomePage> {
-  int minutes = 25;
-  int seconds = 0;
-
   void start() {
     if (minutes > 1) {
       seconds = minutes * 60;
@@ -25,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
       minutes = (seconds / 60).floor();
       seconds -= (minutes * 60);
 
-      const oneSec = Duration(milliseconds: 1);
+      const oneSec = Duration(seconds: 1);
       timer = Timer.periodic(
           oneSec,
           (timer) => {
@@ -40,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       counter++;
                       timer.cancel();
                       if (counter == 1) {
-                        _resetTimer();
+                        _breakTime();
                       } else {
                         minutes = 25;
                         counter++;
@@ -52,10 +54,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _resetTimer() {
+  void _breakTime() {
     setState(() {
       counter = -2;
-      minutes = 5;
+      minutes = breaktime;
+      if (sets < 4) {
+        sets += 1;
+      } else {
+        minutes = longbreak;
+        sets = 0;
+      }
     });
   }
 
@@ -63,6 +71,21 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       timer?.cancel();
     });
+  }
+
+  void _resetTimer() {
+    minutes = 25;
+    seconds = 0;
+  }
+
+  void _popup() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const CupertinoAlertDialog(
+            title: Text('Deseja mesmo resetar?'),
+          );
+        });
   }
 
   Widget buildButtons() {
@@ -76,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             onPressed: () {
               _stopTimer();
+              _popup();
             },
             child: const Icon(Icons.stop_rounded))
         : ElevatedButton(
@@ -127,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Expanded(child: buildTimer()),
 
-              const SetsIcons(total: 4, done: 2), // sets widget
+              SetsIcons(total: 4, done: sets), // sets widget
 
               Expanded(
                 child: Column(
