@@ -18,6 +18,7 @@ int counter = 0;
 int sets = 0;
 
 class _MyHomePageState extends State<MyHomePage> {
+  
   void start() {
     if (minutes > 1) {
       seconds = minutes * 60;
