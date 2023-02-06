@@ -12,14 +12,10 @@ class MyHomePage extends StatefulWidget {
 int minutes = 25;
 int seconds = 0;
 Timer? timer;
-final isRunnig = timer == null ? false : timer!.isActive;
+bool breaktime = false;
 
 class _MyHomePageState extends State<MyHomePage> {
-  void start({bool reset = true}) {
-    if (reset) {
-      resetTimer();
-    }
-
+  void start() {
     if (minutes > 1) {
       seconds = minutes * 60;
     }
@@ -39,7 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       seconds = 59;
                       minutes--;
                     } else {
-                      stopTimer();
+                      _stopTimer();
+                      breaktime = true;
                     }
                   }
                 })
@@ -47,14 +44,19 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void resetTimer() {
+  void _resetTimer() {
     setState(() {
-      minutes = 25;
-      seconds = 0;
+      if (breaktime = true) {
+        minutes = 5;
+        seconds = 0;
+      } else {
+        minutes = 123;
+      }
+      
     });
   }
 
-  void stopTimer() {
+  void _stopTimer() {
     setState(() {
       timer?.cancel();
     });
@@ -70,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
               fixedSize: const Size(60, 60),
             ),
             onPressed: () {
-              stopTimer();
+              _stopTimer();
             },
             child: const Icon(Icons.stop_rounded))
         : ElevatedButton(
