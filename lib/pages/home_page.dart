@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future mypopup(){
+  Future popUp(){
     return showDialog(
         context: context,
         builder: (context) {
@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
               fixedSize: const Size(60, 60),
             ),
             onPressed: () {
-              mypopup();
+              popUp();
             },
             child: const Icon(Icons.stop_rounded))
         : ElevatedButton(
