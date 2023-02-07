@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context) {
           return AlertDialog(
             title: const Text('Reset'),
-            content: const Text('You want to reset the timer?'),
+            content: const Text('Do You want to reset the timer?'),
             actionsAlignment: MainAxisAlignment.center,
             elevation: 10,
             actions: [
