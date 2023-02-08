@@ -115,7 +115,9 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ElevatedButton.styleFrom(
                 elevation: 8,
                 fixedSize: const Size(60, 60),
-                backgroundColor: darkColorScheme.onPrimary),
+                backgroundColor: darkColorScheme.onPrimary,
+                shadowColor: Colors.blueGrey.shade500
+                ),
             onPressed: () {
               popUp();
             },
@@ -124,7 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ElevatedButton.styleFrom(
                 elevation: 8,
                 fixedSize: const Size(60, 60),
-                backgroundColor: darkColorScheme.onPrimary),
+                backgroundColor: darkColorScheme.onPrimary,
+                shadowColor: Colors.blueGrey.shade500),
             onPressed: () {
               start();
             },
@@ -134,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget buildTimer() {
     return SizedBox(
-      height: 300,
+      height: 312,
       width: 200,
       child: Center(
           child: Center(
