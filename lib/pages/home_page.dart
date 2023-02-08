@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:pomodoro_app/theme/color_scheme.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:pomodoro_app/widgets/sets_icons.dart';
 
@@ -112,16 +113,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return isRunnig
         ? ElevatedButton(
             style: ElevatedButton.styleFrom(
-              elevation: 8,
-              fixedSize: const Size(60, 60),
-            ),
+                elevation: 8,
+                fixedSize: const Size(60, 60),
+                backgroundColor: darkColorScheme.onPrimary),
             onPressed: () {
               popUp();
             },
             child: const Icon(Icons.stop_rounded))
         : ElevatedButton(
             style: ElevatedButton.styleFrom(
-                elevation: 8, fixedSize: const Size(60, 60)),
+                elevation: 8,
+                fixedSize: const Size(60, 60),
+                backgroundColor: darkColorScheme.onPrimary),
             onPressed: () {
               start();
             },
@@ -131,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget buildTimer() {
     return SizedBox(
-      height: 200,
+      height: 300,
       width: 200,
       child: Center(
           child: Center(
@@ -144,65 +147,63 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.bottomLeft,
-                end: Alignment.topRight,
-                colors: [Color(0xff2C5364), Color(0xff0F2027)])),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
+    return Scaffold(
+      body: Column(
+        children: [
+          buildTimer(),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Expanded(child: buildTimer()),
+              SetsIcons(total: 4, done: sets),
+            ],
+          ), // sets widget
 
-              SetsIcons(total: 4, done: sets), // sets widget
-
-              Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.cyan.shade500,
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40)),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Color.fromARGB(255, 38, 88, 112),
-                              spreadRadius: 4,
-                              blurRadius: 30,
-                              offset: Offset(-7, 0),
-                              blurStyle: BlurStyle.normal)
+          Expanded(
+            child: Column(
+              children: [
+                Expanded(
+                    child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: darkColorScheme.onSecondary,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(40),
+                        topRight: Radius.circular(40)),
+                    boxShadow: [
+                      BoxShadow(
+                          color: darkColorScheme.secondary,
+                          spreadRadius: 1,
+                          blurRadius: 12,
+                          offset: const Offset(1, 1),
+                          blurStyle: BlurStyle.normal)
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 50, left: 20, right: 20, bottom: 50),
+                    child: Column(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          Text('Study time'),
+                          Text('Breaktime'),
                         ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 50, left: 20, right: 20, bottom: 50),
-                        child: Column(children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: const [
-                              Text('Study time'),
-                              Text('Breaktime'),
-                            ],
-                          ),
-                          Expanded(child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                            buildButtons()
-                          ],))
-                        ]),
-                      ),
-                    )),
-                  ],
-                ),
-              ),
-            ],
+                      Expanded(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [buildButtons()],
+                      ))
+                    ]),
+                  ),
+                )),
+              ],
+            ),
           ),
-        ));
+        ],
+      ),
+    );
   }
 }
