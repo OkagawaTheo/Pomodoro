@@ -18,8 +18,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   pausable_timer: ^1.0.0+6
-  percent_indicator: ^4.0.1
-  
+  sleek_circular_slider: ^2.0.1
 
 
 dev_dependencies:

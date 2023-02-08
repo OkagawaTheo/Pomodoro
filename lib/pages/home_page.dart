@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:pomodoro_app/widgets/sets_icons.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -18,7 +18,6 @@ int counter = 0;
 int sets = 0;
 
 class _MyHomePageState extends State<MyHomePage> {
-  
   void start() {
     if (minutes > 1) {
       seconds = minutes * 60;
@@ -80,13 +79,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future popUp(){
+  Future popUp() {
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: const Text('Reset'),
-            content: const Text('Do You want to reset the timer?'),
+            content: const Text('Do you want to reset the timer?'),
             actionsAlignment: MainAxisAlignment.center,
             elevation: 10,
             actions: [
@@ -105,7 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           );
         });
-  } 
+  }
+
   Widget buildButtons() {
     final isRunnig = timer == null ? false : timer!.isActive;
 
@@ -134,23 +134,11 @@ class _MyHomePageState extends State<MyHomePage> {
       height: 200,
       width: 200,
       child: Center(
-          child: CircularPercentIndicator(
-        center: Text(
-          seconds == 0
-              ? '$minutes : ${seconds.round()}0'
-              : '$minutes : $seconds',
-          style: const TextStyle(fontSize: 30),
-        ),
-        reverse: true,
-        radius: 130,
-        lineWidth: 10,
-        percent: 0.3,
-        animation: true,
-        backgroundColor: const Color(0xff121212),
-        linearGradient: const LinearGradient(
-            colors: [Color(0xff0575E6), Color(0xff021B79)]),
-        circularStrokeCap: CircularStrokeCap.round,
-      )),
+          child: Center(
+              child: Text(
+        seconds == 0 ? '$minutes : ${seconds.round()}0' : '$minutes : $seconds',
+        style: const TextStyle(fontSize: 30),
+      ))),
     );
   }
 
@@ -194,38 +182,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: const EdgeInsets.only(
                             top: 50, left: 20, right: 20, bottom: 50),
                         child: Column(children: [
-                          Expanded(
-                              child: Row(
-                            children: [
-                              Expanded(
-                                  child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text('Study Time',
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.blueGrey[800])),
-                                      Text('Break',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.blueGrey[800],
-                                          )),
-                                    ],
-                                  ),
-                                  Expanded(
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [buildButtons()]))
-                                ],
-                              ))
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: const [
+                              Text('Study time'),
+                              Text('Breaktime'),
                             ],
-                          ))
+                          ),
+                          Expanded(child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                            buildButtons()
+                          ],))
                         ]),
                       ),
                     )),
