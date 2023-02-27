@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pomodoro_app/theme/color_scheme.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:pomodoro_app/widgets/sets_icons.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -27,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
       minutes = (seconds / 60).floor();
       seconds -= (minutes * 60);
 
-      const oneSec = Duration(milliseconds: 1000);
+      const oneSec = Duration(milliseconds: 1);
       timer = Timer.periodic(
           oneSec,
           (timer) => {
@@ -143,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Center(
               child: Text(
         seconds == 0 ? '$minutes : ${seconds.round()}0' : '$minutes : $seconds',
-        style: const TextStyle(fontSize: 30),
+        style: const TextStyle(fontSize: 35, color: Colors.white),
       ))),
     );
   }
@@ -189,8 +188,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: const [
-                          Text('Study time'),
-                          Text('Breaktime'),
+                          Text('Study time', style: TextStyle(fontWeight: FontWeight.bold),),
+                          Text('Breaktime', style: TextStyle(fontWeight: FontWeight.bold),),
                         ],
                       ),
                       Expanded(
