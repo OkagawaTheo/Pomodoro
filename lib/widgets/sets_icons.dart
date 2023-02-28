@@ -8,12 +8,12 @@ class SetsIcons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const doneIcon = Icon(
-      Icons.beenhere,
-      color: Colors.deepPurpleAccent,
+      Icons.circle,
+      color: Color.fromARGB(255, 135, 99, 236),
     );
 
     const notDoneIcon = Icon(
-      Icons.beenhere_outlined,
+      Icons.circle_outlined,
       color: Color.fromARGB(255, 85, 140, 168),
     );
 

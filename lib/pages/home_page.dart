@@ -114,8 +114,9 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ElevatedButton.styleFrom(
                 elevation: 8,
                 fixedSize: const Size(60, 60),
-                backgroundColor: darkColorScheme.onPrimary,
-                shadowColor: Colors.blueGrey.shade500
+               backgroundColor: Colors.grey.shade500,
+               shadowColor: Colors.blue.shade100
+               
                 ),
             onPressed: () {
               popUp();
@@ -125,8 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ElevatedButton.styleFrom(
                 elevation: 8,
                 fixedSize: const Size(60, 60),
-                backgroundColor: darkColorScheme.onPrimary,
-                shadowColor: Colors.blueGrey.shade500),
+                backgroundColor: Colors.grey.shade500,
+                shadowColor: Colors.blueGrey.shade100),
             onPressed: () {
               start();
             },
@@ -174,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         topRight: Radius.circular(40)),
                     boxShadow: [
                       BoxShadow(
-                          color: darkColorScheme.secondary,
+                          color: darkColorScheme.error,
                           spreadRadius: 1,
                           blurRadius: 12,
                           offset: const Offset(1, 1),
@@ -188,8 +189,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: const [
-                          Text('Study time', style: TextStyle(fontWeight: FontWeight.bold),),
-                          Text('Breaktime', style: TextStyle(fontWeight: FontWeight.bold),),
+                          Text('Study time', style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(185, 0, 0, 0)), ),
+                          Text('Breaktime', style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(185, 0, 0, 0)),),
                         ],
                       ),
                       Expanded(

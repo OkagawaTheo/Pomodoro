@@ -41,7 +41,7 @@ const darkColorScheme = ColorScheme(
   primaryContainer: Color(0xFF4F378A),
   onPrimaryContainer: Color(0xFFE9DDFF),
   secondary: Color(0xFF66cccc),
-  onSecondary: Color(0xFFb0c4de),
+  onSecondary: Color(0xFFf5f5f5),
   secondaryContainer: Color(0xFF4A4458),
   onSecondaryContainer: Color(0xFFE8DEF8),
   tertiary: Color(0xFFEFB8C8),
@@ -52,7 +52,7 @@ const darkColorScheme = ColorScheme(
   errorContainer: Color(0xFF93000A),
   onError: Color(0xFF690005),
   onErrorContainer: Color(0xFFFFDAD6),
-  background: Color(0xFFffe4b5),
+  background: Color(0xFFE53C38),
   onBackground: Color(0xFFE6E1E6),
   surface: Color(0xFF1C1B1E),
   onSurface: Color(0xFFE6E1E6),
@@ -66,5 +66,6 @@ const darkColorScheme = ColorScheme(
   surfaceTint: Color(0xFFCFBCFF),
   outlineVariant: Color(0xFF49454E),
   scrim: Color(0xFF000000),
+  
   
 );
