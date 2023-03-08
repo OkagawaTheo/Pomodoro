@@ -19,6 +19,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   pausable_timer: ^1.0.0+6
   sleek_circular_slider: ^2.0.1
+  circular_countdown_timer: ^0.2.3
 
 
 dev_dependencies:

@@ -114,10 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ElevatedButton.styleFrom(
                 elevation: 8,
                 fixedSize: const Size(60, 60),
-               backgroundColor: Colors.grey.shade500,
-               shadowColor: Colors.blue.shade100
-               
-                ),
+                backgroundColor: Colors.grey.shade500,
+                shadowColor: Colors.blue.shade100),
             onPressed: () {
               popUp();
             },
@@ -189,10 +187,31 @@ class _MyHomePageState extends State<MyHomePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: const [
-                          Text('Study time', style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(185, 0, 0, 0)), ),
-                          Text('Breaktime', style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(185, 0, 0, 0)),),
+                          Text(
+                            'Study time',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(185, 0, 0, 0)),
+                          ),
+                          Text(
+                            'Breaktime',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(185, 0, 0, 0)),
+                          ),
                         ],
                       ),
+                      Expanded(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Time to focus!',
+                            style: TextStyle(color: darkColorScheme.onPrimary, fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      )),
                       Expanded(
                           child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
